@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<meta HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<title>التوزيع الجفرافي</title>
+<style>
+@font-face {font-family: 'SegoeUI'; 
+	src: url('fonts/segoeui.eot');
+	src: url('fonts/segoeui.eot?#iefix') format('embedded-opentype'),
+		 url('fonts/segoeui.woff') format('woff'),
+		 url('fonts/segoeui.ttf') format('truetype'),
+		 url('fonts/segoeui.svg#segoeui') format('svg');
+	font-weight: normal; font-style: normal; 
+}
+
+html, body, #map-canvas { height: 100%; margin: 0px; padding: 0px }
+#panel {position: absolute; top: 5px; left: 50%; margin-left: -180px; z-index: 5; background-color: #fff; padding: 5px; border: 1px solid #999; }
+#map-canvas{ background:url("images/ajax-loader-white.gif") no-repeat center center;}
+.gm-style-iw{ height:270px; overflow:auto; }
+.tweet{ overflow:hidden; margin-bottom:20px;  padding-right:10px; font-family:"SegoeUI"; color:#333; }
+.tweet img{ float:left; margin-right:10px; width:48px; height:48px; }
+.tweet .uname strong{ font-weight:bolder; }
+.tweet .uname span.name{ color:#0087BF; text-decoration:none; cursor:default; }
+.tweet .uname{ font-size:14px; float:left; }
+.tweet .retweets{ display:block;}
+.tweet .date{ float:right;}
+.tweetText{ float:left; width:549px; font-size:14px; }
+p{ font-family: inherit; font-size: 1rem; font-weight: normal; line-height: 1.6; margin-bottom: 1.25rem; text-rendering: optimizelegibility; font-family:"SegoeUI"; color:#333; display:none;  }
+</style>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="lib/jquery.cookie.js" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
+<script>
+//&language=ar
+var map, pointarray, heatmap, service, fileid, count, auth, place, username;
+
+window.onmessage = function(e){
+	var obj = JSON.parse(e.data);
+	//console.log(obj.serviceurl, obj.fileid, obj.count);
+	callservice(obj.serviceurl, obj.fileid, obj.count);
+};
+
+sendAuthentication = function (xhr) {
+		var token = $.cookie('token_sovestigate');
+		xhr.setRequestHeader('Authorization', ("Basic ".concat(btoa(token))));
+}
+
+function callservice(url, fid, total){
+	service = url;
+	fileid = fid;
+	count = total;
+
+	var appurl = service+"/twitter/stats/heatMap?file_id="+fileid+"&count="+count;
+	
+		$.ajax({
+			url: appurl,
+			beforeSend: sendAuthentication,
+			withCredentials: true,
+			dataType : "json",
+		}).done(function(d) {
+			var data = d;
+
+			if(data.length>0){
+				initialize(data);
+			}else{
+				$('#map-canvas').html("We don't have data for this query");
+			}
+			/*var data = [{"name":"Saudi Arabia","lat":"25.0000","lng":"45.0000","count":1365.0},{"name":"Riyadh","lat":"24.653664"
+				,"lng":"46.71522","count":1189.0},{"name":"Kuwait","lat":"29.3375","lng":"47.6581","count":853.0},{"name"
+					:"Iraq","lat":"33.0000","lng":"44.0000","count":808.0},{"name":"Egypt","lat":"27.0000","lng":"30.0000"
+				,"count":488.0},{"name":"Cairo","lat":"30.043836","lng":"31.238543","count":363.0},{"name":"Lebanon"
+				,"lat":"33.8333","lng":"35.8333","count":359.0},{"name":"Syrian Arab Republic","lat":"35.0000","lng"
+					:"38.0000","count":355.0},{"name":"Jeddah","lat":"21.516944","lng":"39.219167","count":309.0}];*/
+
+		}).error(function(){
+			$('#map-canvas').html("Error occurred, try again later");
+		});
+}
+
+function initialize(data) {
+
+	var customMapType = new google.maps.StyledMapType([
+		{
+			stylers: [
+				{hue: '#44b0b2'}, //e0ddd5
+				{visibility: 'simplified'},
+				{gamma: 0.5},
+				{weight: 0.5}
+			]
+		},
+		{
+			elementType: 'labels',
+			stylers: [{visibility: 'off'}]
+		},
+		{
+			featureType: 'water',
+			stylers: [{color: '#ffffff'}]
+		}
+	], {
+		name: 'Custom Style'
+	});
+	var customMapTypeId = 'custom_style';
+
+	var map = new google.maps.Map(document.getElementById('map-canvas'), {
+		zoom: 3,
+		center: {lat: 26.115986, lng: 46.669922},  // Saudi Arab.
+		disableDefaultUI: true,
+		mapTypeControlOptions: {
+			mapTypeIds: [google.maps.MapTypeId.ROADMAP, customMapTypeId]
+		}
+	});
+
+	map.mapTypes.set(customMapTypeId, customMapType);
+	map.setMapTypeId(customMapTypeId);
+  
+  	var t = [];
+	var infowindow =  new google.maps.InfoWindow({ content: "" });
+	
+	for(var x=0; x<data.length; x++){
+		var tobj = {};
+			tobj.location = new google.maps.LatLng(data[x].lat, data[x].lng);
+			tobj.weight = data[x].count;
+
+		var image = 'images/icon-03.png';
+		var mark = new google.maps.Marker({ icon: image, position: tobj.location, map: map, title: data[x].name });
+			bindInfoWindow(mark, map, infowindow, data[x].name);
+
+		t.push(tobj);
+	}
+  
+  var pointArray = new google.maps.MVCArray(t);
+  
+	heatmap = new google.maps.visualization.HeatmapLayer({ data: pointArray });
+	heatmap.set('radius', heatmap.get('radius') ? null : 40);
+	
+	heatmap.setMap(map);
+
+  if(data.length < 1){ $('#emptymessage').attr('style','display:block'); } 
+}
+
+function bindInfoWindow(marker, map, infowindow, area) {
+	
+    google.maps.event.addListener(marker, 'click', function() {
+		place = area;
+		var appurl = service+"/twitter/tweets?file_id="+fileid+"&count=5&misbar_tweet_location="+area;
+		
+		var out = '';
+	
+			$.ajax({
+				url: appurl,
+				xhrFields: {withCredentials: true },
+				dataType : "json",
+				beforeSend: sendAuthentication,
+			}).done(function(d) {
+				if(d.elements.length > 0){
+					$.each(d.elements, function(i,v){
+                   		out += '<div class="tweet"><img src="'+fixTwitterImageUrls(v.tweet.user.profile_image_url)+'" onerror="this.src=\'images/tt_temp_image.jpg\'" />';
+    					out += '<span class="uname"><span onclick="gotoUserView(this);" class="name" style="cursor:pointer">'+v.tweet.user.screen_name+'</span><span class="retweets"><strong>Retweets:</strong> '+ v.occurrence+'</span></span><span class="date">'+v.tweet.created_at+'</span>';
+    					out += '<div class="tweetText">'+v.tweet.text+'</div></div>';
+             		});
+					out += '<span onclick="gotoLocation();" style="cursor:pointer">viewall</span>';	
+				} else {
+					out += '<span>There is no data for this query, click on other markers.</span>';	
+				}
+				
+				infowindow.setContent(out);
+        		infowindow.open(map, marker);
+			});
+				
+    });
+}
+
+function fixTwitterImageUrls(url){
+	var s;
+	var re;
+	if(typeof(url) != 'undefined'){
+		s = url;
+		re = s.replace(/^http:\/\/a0/g, "http://pbs");
+	}else{
+		re = 'images/tt_temp_image.jpg';
+	}
+	return re;
+}
+
+    </script>
+</head>
+<body>
+<div id="map-canvas"></div>
+</body>
+</html>

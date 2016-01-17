@@ -1,0 +1,11 @@
+<h4>أعلى هاشتاقات</h4>
+
+<div id="top_hashtags_container" class="section">
+        <div ng-repeat="h in hashtags" class="tophashtag_itemview">
+            <div class="name"><span>#<a class="HashKey">{{h.hashtag }}</a></span></div>
+            <div class="graphbar">
+                    <div class="value">{{h.occurrence | number}}<em> التغريدات</em></div>
+                    <div class="greybar"><div class="bluebar" style="width:{{(100 * h.occurrence/total)| number:0}}%"></div> </div>
+            </div>
+        </div>  
+</div>

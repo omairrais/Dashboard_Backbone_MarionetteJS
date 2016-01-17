@@ -1,0 +1,24 @@
+<h4>أكثر الروابط مشاركة</h4>
+
+<div id="top_links_container" class="section">
+<div ng-repeat="l in links" class="toplinks_itemview">
+	<div class="dp link"> </div>
+    <div class="graphbarcontainer">
+			<div class="name" ng-switch on="l">
+    				<span ng-switch-when="l.link_title != 'undefined'">
+        					<a href="{{l.url}}" target="_blank">{{l.link_title}}</a>
+    				</span>
+    				<span ng-switch-default>
+       	 					<a href="{{l.url}}" target="_blank">{{l.url}}</a>
+    				</span>
+            </div>
+			<div class="graphbar">
+				<div class="value">{{l.occurrence | number}}<em>مشاركة</em></div>
+				<div class="greybar"><div class="bluebar" style="width:{{(100 * l.occurrence/total)| number:0}}%"></div> </div>
+			</div> 
+		</div>
+</div>  
+</div>	
+		
+
+

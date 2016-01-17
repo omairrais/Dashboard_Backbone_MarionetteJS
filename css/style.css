@@ -1,0 +1,460 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+@font-face {
+    font-family: 'montserratregular';
+    src: url('../fonts/montserrat-regular-webfont.eot');
+    src: url('../fonts/montserrat-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/montserrat-regular-webfont.woff') format('woff'),
+         url('../fonts/montserrat-regular-webfont.ttf') format('truetype'),
+         url('../fonts/montserrat-regular-webfont.svg#montserratregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {font-family: 'SegoeUI'; 
+	src: url('../fonts/segoeui.eot'); 
+	src: url('../fonts/segoeui.eot?#iefix') format('embedded-opentype'), 
+		 url('../fonts/segoeui.woff') format('woff'), 
+		 url('../fonts/segoeui.ttf') format('truetype'), 
+		 url('../fonts/segoeui.svg#segoeui') format('svg');
+	font-weight: normal; font-style: normal; 
+}
+
+
+/* 
+ * Droid Arabic Kufi (Arabic) http://www.google.com/webfonts/earlyaccess
+ */
+@font-face {
+  font-family: 'Droid Arabic Kufi';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/DroidKufi-Regular.eot');
+  src: url('../fonts/DroidKufi-Regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/DroidKufi-Regular.woff2') format('woff2'),
+       url('../fonts/DroidKufi-Regular.woff') format('woff'),
+       url('../fonts/DroidKufi-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Droid Arabic Kufi';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/DroidKufi-Bold.eot');
+  src: url('../fonts/DroidKufi-Bold.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/DroidKufi-Bold.woff2') format('woff2'),
+       url('../fonts/DroidKufi-Bold.woff') format('woff'),
+       url('../fonts/DroidKufi-Bold.ttf') format('truetype');
+}
+
+body{ background:#ece9e1 !important; color:#4b4b4b; font-family:'SegoeUI', Arial, Helvetica, sans-serif !important; }
+a{ text-decoration: none;  }
+h1,h2,h3,h4,h5,h6{ font-family: 'Droid Arabic Kufi','Titillium Web' !important; }
+.container{ max-width: 768px; margin:auto; direction:rtl; position: relative; }
+.header{ height:103px; background: white; }
+.header h1{ width: 336px; position: absolute; left: 0px; top: 0px; }
+.header h1 a{ background:url("../images/logo-sovestigate.gif");  width: 336px; height: 103px; display: block; white-space: nowrap; text-indent: 100%; overflow: hidden; }
+
+.header .user-info{ width:320px; position:absolute; right:10px; top:20px; list-style:none; margin:0px; padding:0px; background:#FFF; height:59px; overflow:hidden; border:1px solid transparent; z-index: 150; cursor: pointer; }
+.header .user-info .locale-icon{ right:auto; left:10px; top:10px; position:absolute; background:url("../images/localization-sprite.png") no-repeat; cursor: pointer; width: 40px; height: 40px;  }
+.header .user-info .profile-pic{  width:40px; height:40px; background:#f4f2ec; position:absolute; left:52px; top:10px;  -moz-border-radius: 50%; -webkit-border-radius: 50%; -khtml-border-radius: 50%; border-radius: 50%; overflow:hidden; }
+.header .user-info .profile-pic img{ width: 100%; }
+.header .user-info .login-message{ width:210px; position:absolute; left:90px; top:0px; margin:0px; padding:8px; line-height:14px; text-align:left; font-family: "Droid Arabic Kufi","Titillium Web"; color: #918f89; }
+.header .user-info .login-message em { font-style: normal; }
+.header .user-info .login-message small { display: block; font-size: 14px; margin-bottom: 5px; }
+.header .user-info .login-message small strong { font-weight: normal; }
+.header .user-info .toggle-arrow{ position:absolute; right:10px; top:27px; width:10px; height:6px; background:url("../images/topmenuarrow.png") no-repeat; }
+.header .user-info li{ height:60px; border-bottom:1px solid #f4f2ec; overflow:hidden; text-align: left; }
+.header .user-info li a, .header .user-info li .logout-icon{ display:block; height:40px; line-height:40px; padding-left:50px; margin-left:10px; margin-top:10px; cursor:pointer; color:#848688;  }
+.header .user-info li a:hover, .header .user-info li .logout-icon:hover{ color:#25a2d8; }
+.header .user-info li .help-icon, .header .user-info li .logout-icon{ background:url("../images/localization-sprite.png") no-repeat;}
+.header .user-info li .help-icon{ background-position:0px -162px; }
+.header .user-info li .logout-icon{ background-position:0px -203px; }
+.header .user-info.open { border:1px solid #f4f2ec; height:auto; }
+.header .user-info.open .toggle-arrow{ background:url("../images/topmenuarrow.png") 0px -6px no-repeat; }
+
+
+.files-list-container{ position: relative; height: 187px; }
+.files-list-container .files-list{ width: 505px; height: 37px; color: #f3f5f5;  background:#0087bf; position: absolute; right: 0px;  top: 0px; overflow: hidden; z-index: 100; }
+.files-list-container .files-list .selected-file{ cursor: pointer; padding: 0px 15px; background:url("../images/arrow-files-menu.png") left 15px bottom 12px no-repeat; line-height: 34px; height: 34px; overflow: hidden;  }
+.files-list-container .files-list.open .selected-file{background:url("../images/arrow-files-menu.png") left 15px bottom -14px no-repeat;}
+.files-list-container .files-list.open {height: 360px;}
+.files-list-container .files-list ul{ margin: 10px 15px; padding: 0px; height: 300px; overflow: auto; }
+.files-list-container .files-list li{ cursor: pointer; margin: 5px 0px;  }
+/*.files-list-container .files-list li:nth-child(even){ background: #f8f7f4; }*/
+
+
+.files-list-container .ar_date{ width: 257px; height: 37px; color: #f3f5f5;  background:#445961; position: absolute; left: 0px;  top: 0px; line-height: 33px; text-align: center; }
+.files-list-container .banner{ position: absolute; left: 0px;  top: 0px; }
+.content-container{ padding:15px 0px;  margin:auto; direction:rtl; }
+.content_row{ overflow: hidden; margin-bottom: 15px;  }
+.content-container h3{ color: #918f89; font-size: 15px; }
+
+.top-hashtags-container, .top-tweets-container, .statistics-container, .top-sentiments-container, .top-mentioned-container,
+.top-followers-container, .gender-container, .heatmap-container, .top-videos-container,
+.newspaper-container{ background: white; padding: 15px; float: right; position: relative; }
+
+.top-hashtags-container{ height: 384px; width: 248px; margin-left: 15px; }
+.top-tweets-container{ height: 384px; width: 505px; position: relative; }
+.statistics-container{ height: 80px; /*width: 740px;*/ float: none; cursor: pointer;  }
+.top-sentiments-container{ height: 274px; width: 246px; margin-left: 15px; }
+.top-mentioned-container{ height: 274px; width: 246px; margin-left: 15px; }
+.top-followers-container{ height: 274px; width: 246px; }
+.gender-container{ height: 274px; width: 248px; margin-left: 15px; }
+.heatmap-container{ height: 274px; width: 505px; }
+.top-videos-container{ height: 382px; width: 248px; margin-left: 15px; }
+.newspaper-container{ height: 382px; width: 505px; }
+
+/* login page */
+.login-background { width:100%; height:100%; left:0px; top:0px; position:absolute; background:url("../images/analytics-background.jpg") no-repeat; background-size:100% auto; z-index:100000; }
+.login-page{ width:913px; position:absolute; left:50%; top:50%; margin-left:-456px; margin-top:-173px; background:#FFF; padding:50px;  }
+.login-block h1 {width:198px; margin-bottom:40px; }
+.login-page h1 a{ background:url("../images/sovestigate-logo.png") no-repeat; height:37px; display:block; white-space:nowrap; overflow:hidden; text-indent:100%; }
+.login-box { overflow:hidden; margin-top:10px; }
+
+.login-page .locale-icon { position:absolute; right:50px; top:30px; background:url("../images/localization-sprite.png") no-repeat; cursor: pointer; width: 40px; height: 40px; }
+
+.login-page ul.products  { list-style-type: none; border-top: 1px solid #ccc; width: 379px; margin:0px; }
+.login-page ul.products li { width:400px; }
+.login-page ul.products li a { padding-left:50px; display: block; line-height:38px; border-bottom: 1px solid #ccc; width:379px; color: #aaa79f; }
+.login-page ul.products li.selected { background: url("../images/arrow.gif") no-repeat top right #0087bf; }
+.login-page ul.products li.selected a { color: #fff; display: block; border-bottom:none; }
+
+.login-page .login-block { width: 460px; float:left; }
+.login-page .login-form-block { width: 330px; float:left; }
+.login-page .login-form-block h2 { color: #0087bf; font-weight: normal; font-size: 16px; margin-bottom:25px; }
+
+.login-form{ width:350px; background:#ece9e0; padding:30px; }
+.login-form #login_from{ margin:0px; }
+.login-form .medium{width:290px !important; margin-bottom:0px; }
+.login-form .row{margin-bottom:20px; }
+#wrong_info{ display:none; margin-bottom:20px !important; }
+.login-form .error{ margin-bottom:0px !important;}
+.form-button { text-align:right; }
+.form-button .btn_send{ width:112px; height: 30px;border: none;background-color: #0087bf;color: white; cursor: pointer; text-align:center; /*line-height: 28px; */margin: auto; padding:0px; }
+.form-button a{ font-size:14px; color:#646768; margin-right:20px; }
+
+.footer { bottom: -60px; position: absolute; width: 800px; }
+.footer p { text-align: center; font-size: 12px; color: #fff; }
+
+#login_loading{ display:none; }
+/* foundation error background color */
+[data-abide] .error small.error, [data-abide] .error span.error, [data-abide] span.error, [data-abide] small.error{ background:#c60f13 !important; }
+
+
+.top-hashtags-container h3{ margin-bottom: 20px; }
+.scale-bar-label{ color: #5f5f5f; font-size: 15px; margin-bottom: 5px;  }
+.scale-bar-label:before{ content: "#";  }
+.scale-bar { position: relative; height: 18px; margin-bottom: 18px;  }
+.scale-bar .value{ position: absolute; height: 18px; width: 100%; color: white; font-size: 12px; z-index: 2; line-height: 17px; padding-right: 7px; direction: rtl; }
+.scale-bar .blue{ position: absolute; height: 18px; width: 100%; background: url("../images/hashtags_scale.png") no-repeat left top #0087bf; z-index: 1; }
+.scale-bar .grey{ position: absolute; height: 18px; width: 100%; background: url("../images/hashtags_scale.png") no-repeat left top #ece9e0; z-index: 0;  }
+
+.top-followers-container h3{ margin-bottom: 10px; }
+.followed-item{ overflow: hidden; }
+.followed-item .scale-bar-label{ color: #aaa79f; font-size: 12px; margin-bottom: 0px;  }
+.followed-item .scale-bar-label:after{ content: "@";  }
+.followed-item img{ width: 36px; height: 36px; float: right; margin-left: 10px; }
+.followed-item .followed-data{ float: right; width: 160px; }
+
+.top-videos-container h3{ margin-bottom: 20px; }
+#videos_container{ height: 305px; overflow: hidden; width: 100%; }
+.video_item{ width: 218px !important; height: 305px; overflow: hidden; float: right; cursor: pointer; }
+.video_item img.thumbnail{ width: 220px; height: 125px; }
+.video_item h4{ overflow: hidden; color: #0087bf; font-size: 15px; line-height: 20px; margin: 10px 0px; height: 40px; }
+.video_item label.author_name{ color: #afada5; border-top: 1px solid #ece9e0; border-bottom: 1px solid #ece9e0; line-height: 20px; height: 25px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  }
+.video_item .stats{ padding-top: 10px; overflow: hidden; position: relative; }
+.video_item .stats .pie_chart_container{ width:98px; height: 80px; float: right; }
+.video_item .stats .meta_data{ width: 120px; float: right; padding-top: 15px; }
+.video_item .stats .meta_data span{ font-size: 12px; color: #5f5f5f; }
+.video_item .stats .meta_data .views{  background: url("../images/icon-view.png") no-repeat right top; padding-right: 21px; display: block; }
+.video_item .stats .meta_data .likes{ background: url("../images/icon-like.png") no-repeat right top; padding-right: 21px; }
+.video_item .stats .meta_data .dislikes{ background: url("../images/icon-dislike.png") no-repeat right top; padding-right: 21px; }
+.video_item .stats img.smiley{ position: absolute; left: 34px; bottom: 28px; width: 30px; }
+
+
+.top-mentioned-container .profile-photos{ overflow: hidden; padding-left: 25px; }
+.top-mentioned-container .profile-photos .user{ float: left; width: 60px; text-align: center;  }
+.top-mentioned-container .profile-photos .user img{ width: 38px; height: 38px; }
+.top-mentioned-container .profile-photos .user span{ display: block; font-size: 12px; color: #b0ada5; text-align: center;  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.top-sentiments-container { position: relative; }
+.top-sentiments-container .legend{ font-size: 12px; color: #b0ada5; text-align: left; font-family: "Droid Arabic Kufi","Titillium Web"; }
+.top-sentiments-container .legend span{ display: inline-block; width: 5px; height: 5px; vertical-align:baseline; margin-right: 5px; }
+.top-sentiments-container .legend .neutral{ background: #aaa79f;   }
+.top-sentiments-container .legend .positive{ background: #3e9a9a; }
+.top-sentiments-container .legend .negative{ background: #e67471; }
+.top-sentiments-container img{ position: absolute; left: 106px; bottom: 109px; }
+
+.stats-container{ overflow: hidden; height: 80px; background: white; position: relative;  }
+.statistics-container{ height: 80px !important; float: right; width:768px !important; }
+.stats-container .ttlogo, .stats-container .fblogo, .stats-container .ytlogo, .stats-container .omlogo{ width: 63px; height: 50px; position: absolute; right: 20px; top: 15px; }
+.stats-container .ttlogo{ background: url("../images/twitter-icon.png") no-repeat; }
+.stats-container .fblogo{ background: url("../images/facebook-icon.png") no-repeat; }
+.stats-container .ytlogo{ background: url("../images/youtube-icon.png") no-repeat; }
+.stats-container .omlogo{ background: url("../images/oldmedia-icon.png") no-repeat; }
+
+.stats-container .stats{ width: 500px; position: absolute; top: 15px; left: 20px; overflow: hidden; }
+.stats-container .stats .block{ border-right: 1px solid #edeae2; width: 100px; height: 50px; float: left; padding-right: 20px; font-family: "Droid Arabic Kufi","Titillium Web"; text-align: right; }
+.stats-container .stats .block:last-child{ border: 0px; }
+.stats-container .stats .block h4{ color: #aaa79f; line-height: 15px; font-size: 12px; margin: 0px; }
+.stats-container .stats .block span{ font-size: 20px; line-height: 18px; }
+.stats-container .stats .block.blue span{ color: #0087bf; }
+.stats-container .stats .block.purple span{ color: #845880; }
+.stats-container .stats .block.green span{ color: #4aa0a0; }
+.stats-container .stats .block.orange span{ color: #e67471; }
+.stats-container .stats .block.grey span{ color: #445961; }
+
+#newspaper_graph{ width: 460px; height: 160px; position: relative; }
+#newspaper_post_container{ width: 460px; height: 125px; background: #ece9e0; }
+.newspaper-names{ font-size: 12px; margin-bottom: 10px; text-align: left; padding-left: 54px;  height: 30px; overflow: hidden;  }
+.newspaper-names span{ display: inline-block; width: 77px; text-align: center; color: #b0ada5; line-height: 14px;  /*white-space: nowrap; overflow: hidden; text-overflow: ellipsis; */ vertical-align: top; }
+
+/*.vertical-axis  { width: 25px; height: 176px; border-left: 1px solid #000000; position: absolute; top: 0px; right: 0px; }
+.data-plot { width: 415px; height: 155px; position: absolute; right: 25px; }
+.data-plot .rect_width{ position: absolute; width: 65px; bottom: 0px; text-align: center; }
+.data-plot .rect_bar { width: 15px; display: inline-block; height: 100%; position: absolute; background: #3e9a9a;    }
+.horizontal-axis{ width: 415px; height: 45px; border-top: 1px solid #ece9e0; position: absolute; right: 24px; bottom: 0px; }*/
+
+#top_gender_container{ height: 110px; width: 133px; margin: auto; position: relative; }
+#top_gender_container div{ position: absolute; bottom: 0px; background: url("../images/gender_arrow.png") center top no-repeat; }
+#top_gender_container .male{ background-color:#44b0b2; width: 46px; left: 0px; }
+#top_gender_container .female{ background-color:#845880; width: 46px; right: 0px; }
+#top_gender_container .notdetected{ background-color:#aaa79f; width: 41px; left: 46px; }
+
+.gender_icon{ background: url("../images/icon_gender_new.png") no-repeat; width: 133px; height: 64px; margin: auto; margin-bottom: 20px; }
+.gender_legend{ font-family: "Droid Arabic Kufi","Titillium Web"; font-size: 12px; color: #bfbdb7; margin-right: 60px; }
+.gender_legend span{ display: inline-block; width: 6px; height: 6px; margin-right: 7px; }
+.gender_legend .male{ background:#44b0b2; }
+.gender_legend .female{ background:#845880; }
+.gender_legend .notdetected{ background:#aaa79f; }
+
+#heatmap_frame{ width: 460px;  height: 200px; }
+#heatmap_frame iframe { border:none; width:100%; height:100% }
+
+
+#tweets_container{ background: #ece9e0; height: 80px; overflow: hidden; }
+#tweets_container ul{ margin:0px; padding: 0px; padding-right: 20px; padding-top: 20px; }
+#tweets_container ul li{ overflow: hidden; }
+#tweets_container ul li img{ float: right; margin-left: 10px; }
+#tweets_container ul li p{ color: #292929; font-family: "Droid Arabic Kufi","Titillium Web";  font-size: 14px; float: right; width: 370px; }
+#tweets_container ul li p span{ color: #0087bf; }
+#keyword_container{ width: 400px; height: 40px; position: absolute; left: 20px; top: 10px; font-size: 12px; text-align: right; padding-top: 10px; }
+#keyword_container .keyword { display: inline-block; width: 130px;  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; text-align: right; }
+#keyword_container .keyword .kw_bullet{ display: inline-block; height: 6px; margin:0px 5px; width: 6px; vertical-align: middle; }
+#keyword_container .keyword .kw_color0{background: #0087bf;}
+#keyword_container .keyword .kw_color1{background: #b96a6a;}
+#keyword_container .keyword .kw_color2{background: #00bfb4;}
+#keyword_container .kw_dropdown{ position: absolute; padding: 10px; right: 0px; top: 30px;  max-height: 200px; overflow: auto; border: 1px solid #ece9e0; background: white; display: none;  }
+#keyword_container .kw_dropdown span{ display: block; direction: ltr; text-align: right; cursor: pointer; margin: 5px 0px; }
+#keyword_container .kw_dropdown span:hover{ background: #ece9e0; }
+#keyword_container .kw_dropdown.kw_0{ right: 0px; }
+#keyword_container .kw_dropdown.kw_1{ right: 150px; }
+#keyword_container .kw_dropdown.kw_2{ left:0px; right: auto; }
+
+#tweets_graph {height:236px; }
+.empty_msg{ text-align: center; font-family: "Droid Arabic Kufi","Titillium Web";  font-size: 15px; color:#918f89; line-height: 80px;  }
+
+
+#newspaper_post_container ul{ margin:0px; padding: 0px; padding-right: 20px; padding-top: 20px; height: 120px; overflow: hidden; }
+#newspaper_post_container ul li{ overflow: hidden; }
+#newspaper_post_container ul li h6{ font-size: 15px; color: #0087bf; margin:0px; }
+#newspaper_post_container ul li img{ float: right; margin-left: 10px; width:60px; height: 60px;  }
+#newspaper_post_container ul li p{ color: #292929; font-family: "Droid Arabic Kufi","Titillium Web";  font-size: 14px; float: right; width: 370px; }
+#newspaper_post_container ul li p img{ display: none; }
+/*svg items */
+.mentioned-container .axis path, .mentioned-container .axis line {  fill: none;  stroke: #b0ada5;  shape-rendering: crispEdges;  }
+.mentioned-container .axis text { font-family: "Droid Arabic Kufi","Titillium Web";  font-size: 10px; fill: #b0ada5; }
+.mentioned-container .tick {  stroke-dasharray: 1, 2; }
+.mentioned-container .y.axis text { text-anchor: start !important; }
+
+
+#newspaper_graph .axis path, #newspaper_graph .axis line {  fill: none;  stroke: #b0ada5;  shape-rendering: crispEdges;  }
+#newspaper_graph .axis text {  font-family: "Droid Arabic Kufi","Titillium Web";  font-size: 10px; fill: #b0ada5; }
+#newspaper_graph .tick {  stroke-dasharray: 1, 2;  }
+#newspaper_graph .y.axis text { text-anchor: start !important;  }
+#newspaper_graph .x.axis text { display: none;   }
+
+.pie_chart{ direction: ltr; }
+.top-sentiments-container .pie_chart .circle_border{ fill: none; stroke: #ece9e0; stroke-width: 8px; }
+.labels text{ font-size: 11px; }
+.pie_chart_container .pie_chart .circle_border{ fill: none; stroke: #ece9e0; stroke-width: 5px; }
+
+#tweets_graph .axis path { fill: none; stroke: #b0ada5; shape-rendering: crispEdges; }
+#tweets_graph .axis text { font-family: "Droid Arabic Kufi","Titillium Web"; font-size: 10px; fill: #b0ada5; }
+#tweets_graph .y.axis text { text-anchor: start !important;  }
+#tweets_graph .value { fill: #333333; font: 8px sans-serif; }
+#tweets_graph .line{ stroke: #139acd;  fill: none; stroke-width: 2; }
+#tweets_graph .kw_color0{stroke: #0087bf;}
+#tweets_graph .kw_color1{stroke: #b96a6a;}
+#tweets_graph .kw_color2{stroke: #00bfb4;}
+#tweets_graph .dots{ fill:#ffffff; stroke: #0087BF; stroke-width: 1; }
+#tweets_graph .label_x, #tweets_graph .label_y { display: none; }
+
+
+.loading{ background: url("../images/ajax-loader-white.gif") no-repeat center center; position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; }
+
+
+/* for date */
+/*
+.lb-January:before{ content:"January"}
+.lb-February:before{ content:"February"}
+.lb-March:before{ content:"March"}
+.lb-April:before{ content:"April"}
+.lb-May:before{ content:"May"}
+.lb-June:before{ content:"June"}
+.lb-July:before{ content:"July"}
+.lb-August:before{ content:"August"}
+.lb-September:before{ content:"September"}
+.lb-October:before{ content:"October"}
+.lb-November:before{ content:"November"}
+.lb-December:before{ content:"December"}
+
+.lb-Sun:before{ content:"Sun"}
+.lb-Mon:before{ content:"Mon"}
+.lb-Tue:before{ content:"Tue"}
+.lb-Wed:before{ content:"Wed"}
+.lb-Thu:before{ content:"Thu"}
+.lb-Fri:before{ content:"Fri"}
+.lb-Sat:before{ content:"Sat"}
+
+
+.lb-Muharram:before{ content:"Muharram"}
+.lb-Safar:before{ content:"Safar"}
+.lb-Rabi-ul-Awwal:before{ content:"Rabi'ul Awwal"}
+.lb-Rabi-ul-Akhir:before{ content:"Rabi'ul Akhir"}
+.lb-Jumadal-Ula:before{ content:"Jumadal Ula"}
+.lb-Jumadal-Akhira:before{ content:"Jumadal Akhira"}
+.lb-Rajab:before{ content:"Rajab"}
+.lb-Shaban:before{ content:"Sha'ban"}
+.lb-Ramadan:before{ content:"Ramadan"}
+.lb-Shawwal:before{ content:"Shawwal"}
+.lb-Dhul-Qaada:before{ content:"Dhul Qa'ada"}
+.lb-Dhul-Hijja:before{ content:"Dhul Hijja"}
+.lb-AH:before{ content:"AH"}*/
+
+/* for date */
+/* for date */
+.lb-January:before{ content:"يناير"}
+.lb-February:before{ content:"فبراير"}
+.lb-March:before{ content:"مارس"}
+.lb-April:before{ content:"إبريل"}
+.lb-May:before{ content:"مايو"}
+.lb-June:before{ content:"يونية"}
+.lb-July:before{ content:"يولية"}
+.lb-August:before{ content:"أغسطس"}
+.lb-September:before{ content:"سبتمبر"}
+.lb-October:before{ content:"أكتوبر"}
+.lb-November:before{ content:"نوفمبر"}
+.lb-December:before{ content:"ديسمبر"}
+
+.lb-Sun:before{ content:"الأحد"}
+.lb-Mon:before{ content:"الاثنين"}
+.lb-Tue:before{ content:"الثلاثاء"}
+.lb-Wed:before{ content:"الأربعاء"}
+.lb-Thu:before{ content:"الخميس"}
+.lb-Fri:before{ content:"الجمعة"}
+.lb-Sat:before{ content:"السبت"}
+
+
+
+.lb-Muharram:before{ content:"محرم"}
+.lb-Safar:before{ content:"صفر"}
+.lb-Rabi-ul-Awwal:before{ content:"ربيع الأول"}
+.lb-Rabi-ul-Akhir:before{ content:"ربيع الثاني"}
+.lb-Jumadal-Ula:before{ content:"جمادى الأولى"}
+.lb-Jumadal-Akhira:before{ content:"جمادى الآخرة"}
+.lb-Rajab:before{ content:"رجب"}
+.lb-Shaban:before{ content:"شـعبان"}
+.lb-Ramadan:before{ content:"رمضان"}
+.lb-Shawwal:before{ content:"شوال"}
+.lb-Dhul-Qaada:before{ content:"ذو القعدة"}
+.lb-Dhul-Hijja:before{ content:"ذو الحجة"}
+.lb-AH:before{ content:"هـ"}
+
+
+/*slick css */
+.slick-list,.slick-slider,.slick-track{ position:relative; display:block }
+.slick-loading .slick-slide,.slick-loading .slick-track{ visibility:hidden }
+.slick-slider{
+    -moz-box-sizing:border-box; box-sizing:border-box; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; -khtml-user-select:none;
+    -ms-touch-action:pan-y; touch-action:pan-y; -webkit-tap-highlight-color:transparent }
+.slick-list{ overflow:hidden; margin:0; padding:0 }
+.slick-list:focus{outline:0}
+.slick-list.dragging{cursor:pointer;cursor:hand}
+.slick-slider .slick-list,.slick-slider .slick-track{ -webkit-transform:translate3d(0,0,0); -moz-transform:translate3d(0,0,0); -ms-transform:translate3d(0,0,0); -o-transform:translate3d(0,0,0);
+    transform:translate3d(0,0,0) }
+.slick-track{ top:0; left:0 }
+.slick-track:after,.slick-track:before{ display:table; content:'' }
+.slick-track:after{clear:both}
+.slick-slide{display:none;float:left;height:100%;min-height:1px}[dir=rtl]
+.slick-slide{float:right}
+.slick-slide img{display:block}
+.slick-slide.slick-loading img{display:none}
+.slick-slide.dragging img{pointer-events:none}
+.slick-initialized .slick-slide{display:block}
+.slick-vertical .slick-slide{display:block;height:auto;border:1px solid transparent}
+.slick-arrow.slick-hidden{display:none}
+
+.slick-dots li{ display: inline-block; margin:0px 2px; }
+.slick-dots li button{ padding: 0px; margin: 0px; white-space: nowrap; overflow: hidden; text-indent: 100%; -moz-border-radius: 50%; -webkit-border-radius: 50%; -khtml-border-radius: 50%; border-radius: 50%; width: 10px; height: 10px; background: #ece9e0; display: inline-block; cursor: pointer; }
+.slick-dots li.slick-active button{ background: #0087bf; }
+
+#videos_container .slick-dots{ position: absolute; bottom: -14px;  width: 200px; height: 30px; text-align: center; margin: 0px; padding: 0px;  }
+.stats-container .slick-dots{ width: 100px; height:20px; position: absolute; right: 110px; top: 40px; margin: 0px; padding: 0px; text-align: center; }

@@ -1,0 +1,10 @@
+<h4>الأكثر متابعة</h4>
+
+<div id="top_followers_container" class="section">
+    <div ng-repeat="f in followers" class="topfollowers_itemview">
+    			<div class="value">{{f.user.followers_count | number }}<em>المتابعين</em></div>
+				<div class="count">{{ $index + 1 }}</div>
+				<div class="dp"><a><img src="{{f.user.profile_image_url}}" onerror="this.src='images/tt_temp_image.jpg'"></a></div>
+				<div class="name"><a>{{f.user.name}}</a></div>
+    </div>  
+</div>

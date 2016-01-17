@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>Sovestigate: Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css' />
+  <link rel="stylesheet" href="css/font-awesome.min.css" />
+  <link rel="stylesheet" href="css/foundation.min.css" />
+</head>
+<body>
+
+<!-- Content -->
+
+<div id="app_container" class="container">
+
+</div>
+
+<script id="login-view-template" type="text/template">
+      <span class="locale-icon" id="local_button"></span>
+      <div class="login-box">
+        <div class="login-block">
+          <h1><a href="#">Sovestigate</a></h1>
+          <ul class="products">
+            <li class="selected"><a href="#">Sovestigate Analytics</a></li>
+            <li><a href="#">Sovestigate Social Hub</a></li>
+            <li><a href="#">Sovestigate Buzz Report</a></li>
+            <li><a href="#">Sovestigate Index</a></li>
+          </ul>
+        </div>
+        <div class="login-form-block">
+          <h2>Login</h2>
+          <div class="login-form">
+            <form data-abide="ajax" autocomplete="off" id="login_from" novalidate="novalidate">
+
+              <div class="row">
+                <input type="text" placeholder="Username" required="" class="medium" value="" id="login_username"> <small class="error">Username is required </small>
+              </div>
+              <div class="row">
+                <input type="password" placeholder="Password" pattern="login_password" required="" class="medium" value="" id="login_password"> <small class="error">Password is required</small>
+              </div>
+              <div id="wrong_info" class="row">
+                <small class="error">Username or Password is Wrong</small>
+              </div>
+              <div class="form-button">
+                <span id="login_loading"><img alt="" src="images/ajax-loader-body.gif"></span> <button type="submit" id="login_submit" class="btn_send">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>All Rights Reserved &copy; 2014 XCEED | Version 2.1</p>
+      </div>
+</script>
+
+<script id="file-layout-view-template" type="text/template">
+  <header class="header">
+    <h1><a href="#">Sovestigate:Dashboard</a></h1>
+    <ul id="user_info" class="user-info">
+      <li>
+        <p class="login-message"> <small id="profilename">مرحبا <span id="customer_id">admin@xceed</span></small> <small id="en_date"> </small></p>
+        <span class="profile-pic"><img alt="" src="images/img7.jpg"></span>
+        <span class="locale-icon"></span>
+        <span class="toggle-arrow"></span>
+      </li>
+      <li><a class="help-icon" target="_blank" href="http://support.xceed.com.sa/">Help</a></li>
+      <li><span class="logout-icon" id="logout_link">Logout</span></li>
+    </ul>
+  </header>
+  <div class="files-list-container">
+    <img class="banner" src="images/image-banner.jpg" alt="" />
+    <div id="ar_date" class="ar_date">      الخميس ٢٥ ذو الحجة ١٤٣٦هـ</div>
+    <div id="file_list" class="files-list">
+
+    </div>
+  </div>
+  <div class="content-container">
+    <div class="content_row">
+      <div id="top_hashtags_container" class="top-hashtags-container" > </div>
+      <div id="top_tweets_container" class="top-tweets-container"> </div>
+    </div>
+    <div class="content_row">
+      <div class="stats-container">
+        <div id="statistics_oldmedia" class="statistics-container"></div>
+        <div id="statistics_youtube" class="statistics-container"></div>
+        <div id="statistics_facebook" class="statistics-container"></div>
+        <div id="statistics_twitter" class="statistics-container"></div>
+      </div>
+    </div>
+    <div class="content_row">
+      <div id="top_sentiments_container" class="top-sentiments-container"> </div>
+      <div id="top_mentioned_container" class="top-mentioned-container"> </div>
+      <div id="top_followers_container" class="top-followers-container"> </div>
+    </div>
+    <div class="content_row">
+      <div id="gender_container" class="gender-container"> </div>
+      <div id="heatmap_container" class="heatmap-container"> </div>
+    </div>
+    <div class="content_row">
+      <div id="top_videos_container" class="top-videos-container"> </div>
+      <div id="newspaper_container" class="newspaper-container"> </div>
+    </div>
+  </div>
+</script>
+<script id="file-list-template" type="text/template">
+  <div class="selected-file"><%= selected_file_name %></div>
+  <ul id="files_container">
+
+  </ul>
+</script>
+<script id="file-item-template" type="text/template">
+  <%= name %>
+</script>
+
+<script id="hashtags-item-template" type="text/template">
+  <% total = (occurrence/topoccurrence)*100 %>
+<label class="scale-bar-label"><%= hashtag %></label>
+<div class="scale-bar">
+  <div class="value"><%= numberWithCommas(occurrence) %> الهاشتاقات</div>
+  <div class="blue" style="width: <%= total %>%"></div>
+  <div class="grey"></div>
+</div>
+
+</script>
+<script id="hashtags-collection-template" type="text/template">
+  <h3>أشهر الهاشتاقات</h3>
+  <div id="hashtags_container"></div>
+</script>
+
+<script id="followed-item-template" type="text/template">
+  <% total = (user.followers_count/topfollower)*100 %>
+  <img src="<%= fixTwitterImageUrls(user.profile_image_url) %>" onerror="this.src='images/tt_temp_image.jpg'" alt="" />
+  <div class="followed-data">
+    <label class="scale-bar-label"><%= user.screen_name %></label>
+    <div class="scale-bar">
+      <div class="value"><%= numberWithCommas(user.followers_count) %> المتابعين</div>
+      <div class="blue" style="width: <%= total %>%"></div>
+      <div class="grey"></div>
+    </div>
+  </div>
+</script>
+<script id="followed-collection-template" type="text/template">
+  <h3>الأكثر متابعة</h3>
+  <div id="followed_container"></div>
+</script>
+
+<script id="mentioned-item-template" type="text/template">
+  <h3> الأكثر ذكراً </h3>
+  <div id="bar_graph" class="mentioned-container"> </div>
+  <div class="profile-photos">
+    <% _.each(elements, function(elem){  %>
+    <div class="user"><img src="<%= fixTwitterImageUrls(elem.user.profile_image_url) %>" onerror="this.src='images/tt_temp_image.jpg'" alt="" /> <span> <%= elem.user.screen_name %></span> </div>
+    <% }); %>
+  </div>
+</script>
+
+<script id="top-view-video-item-template" type="text/template">
+<img src="<%= thumbnail %>" alt="" class="thumbnail" />
+  <h4><%= title %></h4>
+  <label class="author_name"><%= uploader %></label>
+  <div class="stats">
+    <div class="meta_data">
+      <span class="views"><%= view_count %></span>
+      <span class="likes"><%= likes %></span>
+      <span class="dislikes"><%= dislikes %></span>
+    </div>
+    <div id="pie_chart_container" class="pie_chart_container"></div>
+    <img src="images/<%= face %>-icon.png" class="smiley" onerror="this.src='images/flat-icon.png'" alt="" />
+  </div>
+</script>
+<script id="top-view-videos-container-template" type="text/template">
+  <h3>أشهر مقاطع الفيديو</h3>
+  <div style="width: 218px; overflow: hidden;"><div id="videos_container"></div></div>
+</script>
+
+<script id="gender-item-template" type="text/template">
+  <h3>المشاركات حسب الجنس</h3>
+  <div id="top_gender_container">
+      <%
+        var male_height =  (number_of_male/count)*100;
+        var female_height =  (number_of_female/count)*100;
+        var unknown_height =  (number_of_unknown/count)*100;
+      %>
+    <div class="male" style="height:<%= male_height %>%"></div>
+    <div class="female" style="height:<%= female_height %>%"></div>
+    <div class="notdetected" style="height:<%= unknown_height %>%"></div>
+  </div>
+  <div class="gender_icon"></div>
+  <div class="gender_legend">
+    <span class="male"></span> رجال
+    <span class="female"></span> نساء
+    <span class="notdetected"></span> غير محدد
+  </div>
+</script>
+
+<script id="sentiment-item-template" type="text/template">
+  <h3>تحليل المشاعر</h3>
+    <div id="sentiment_graph"> </div>
+    <div class="legend">
+      <span class="neutral"></span>  إيجابي
+      <span class="positive"></span> سلبي
+      <span class="negative"></span>     محايد
+    </div>
+    <img src="images/<%= face %>-icon.png" onerror="this.src='images/flat-icon.png'" alt="" />
+</script>
+
+<script id="twitter-summary-item-template" type="text/template">
+<div class="ttlogo"></div>
+<div class="stats">
+  <div class="block blue">
+      <h4>الهاشتاقات:</h4>
+      <span><%= numberWithCommas(number_of_hashtags) %></span>
+  </div>
+  <div class="block purple">
+    <h4>روابط:</h4>
+    <span><%= numberWithCommas(number_of_links) %></span>
+  </div>
+  <div class="block green">
+    <h4>المغردون:</h4>
+    <span><%= numberWithCommas(number_of_tweeters) %></span>
+  </div>
+  <div class="block orange">
+    <h4>نقاشاً:</h4>
+    <span><%= numberWithCommas(number_of_mentions) %></span>
+  </div>
+  <div class="block grey">
+    <h4>التغريدات:</h4>
+    <span><%= numberWithCommas(number_of_tweets) %></span>
+  </div>
+</div>
+</script>
+
+<script id="facebook-summary-item-template" type="text/template">
+  <div class="fblogo"></div>
+  <div class="stats">
+    <div class="block blue">
+      <h4>المنشورات العامة:</h4>
+      <span><%= numberWithCommas(public_posts_count) %></span>
+    </div>
+    <div class="block purple">
+      <h4>منشورات الصفحات:</h4>
+      <span><%= numberWithCommas(page_posts_count) %></span>
+    </div>
+    <div class="block green">
+      <h4>الناشرينن:</h4>
+      <span><%= numberWithCommas(posters_count) %></span>
+    </div>
+    <div class="block orange">
+      <h4>التعليقات:</h4>
+      <span><%= numberWithCommas(comments_count) %></span>
+    </div>
+    <div class="block grey">
+      <h4>روابط:</h4>
+      <span><%= numberWithCommas(links_count) %></span>
+    </div>
+  </div>
+</script>
+
+<script id="youtube-summary-item-template" type="text/template">
+  <div class="ytlogo"></div>
+  <div class="stats">
+    <div class="block blue">
+      <h4>الفيديوهات:</h4>
+      <span><%= numberWithCommas(v_count) %></span>
+    </div>
+    <div class="block purple">
+      <h4>المستخدمين:</h4>
+      <span><%= numberWithCommas(u_count) %></span>
+    </div>
+    <div class="block green">
+      <h4>اعجاب:</h4>
+      <span><%= numberWithCommas(likes_count) %></span>
+    </div>
+    <div class="block orange">
+      <h4>عدم اعجاب:</h4>
+      <span><%= numberWithCommas(dislikes_count) %></span>
+    </div>
+  </div>
+</script>
+
+<script id="oldmedia-summary-item-template" type="text/template">
+  <div class="omlogo"></div>
+  <div class="stats">
+    <div class="block blue">
+      <h4>عدد النشرات:</h4>
+      <span><%= numberWithCommas(posts_count) %></span>
+    </div>
+    <div class="block purple">
+      <h4>عدد المصادر:</h4>
+      <span><%= numberWithCommas(sources_count) %></span>
+    </div>
+    <% if(typeof NEWSPAPER_count != "undefined"){ %>
+      <div class="block green">
+        <h4>عدد الصحف:</h4>
+        <span><%= numberWithCommas(NEWSPAPER_count) %></span>
+      </div>
+    <% } %>
+  </div>
+</script>
+
+<script id="top-newspaper-template" type="text/template">
+  <h3>أهم الصحف</h3>
+  <div id="newspaper_graph"> </div>
+  <div class="newspaper-names">
+    <% _.each(elements, function(elem, index){  %>
+      <span><%= elem.sourceName %></span>
+    <% }); %>
+  </div>
+  <div id="newspaper_post_container">
+  <div class="empty_msg">click on the bar to show the related posts</div>
+  </div>
+</script>
+
+<script id="tweets-collection-template" type="text/template">
+  <h3>التغريدات</h3>
+  <div id="keyword_container"></div>
+  <div id="tweets_graph"> </div>
+  <div id="tweets_container">
+    <div class="empty_msg">click on the circles to show the related tweets</div>
+  </div>
+</script>
+
+<script id="heatmap-template" type="text/template">
+  <h3>التوزيع الجفرافي</h3>
+  <div id="heatmap_frame">
+    <iframe id="map" style="overflow:hidden" src="heatmap.html?4564"></iframe>
+  </div>
+</script>
+
+<script id="keywords-collection-template" type="text/template">
+  <% _.every(items, function(item, index){  %>
+      <span class="keyword" id="kw_<%= item.id %>"><span class="kw_bullet kw_color<%= index %>"></span><%= item.keyword %></span>
+  <% return index < 2; }); %>
+<div class="kw_dropdown">
+  <span id="kw_dd_xx">select keyword</span>
+  <% _.each(items, function(item, index){  %>
+      <span id="kw_dd_<%= item.id %>"><%= item.keyword %></span>
+    <% }); %>
+</div>
+
+</script>
+<script id="loading-template" type="text/template">
+<div class="loading"></div>
+</script>
+<script id="no-data-template" type="text/template">
+  <div>We don't have data for this query</div>
+</script>
+<script id="error-template" type="text/template">
+  <div>Error occurred, try again later</div>
+</script>
+
+<!-- Utilities Libraries -->
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="lib/slick.min.js"></script>
+<!-- utils -->
+<script src="lib/sha1.js" type="text/javascript"></script>
+<script src="lib/jquery.cookie.js" type="text/javascript"></script>
+<script src="lib/moment.min.js" type="text/javascript"></script>
+<script src="lib/foundation.min.js" type="text/javascript" ></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>-->
+
+<!-- Backbone and React-->
+<!-- backbone -->
+<script src="lib/json2.js" type="text/javascript"></script>
+<script src="lib/underscore.js" type="text/javascript"></script>
+<script src="lib/backbone-min.js" type="text/javascript"></script>
+<!--<script src="lib/backbone.basicauth.js" type="text/javascript"></script>-->
+<script src="lib/backbone.marionette.min.js" type="text/javascript"></script>
+<!-- /backbone -->
+
+<!--My JS-->
+<script src="js/Application.js" type="text/javascript"></script>
+<script src="js/MainModule.js" type="text/javascript"></script>
+<script src="js/Scripts.js" type="text/javascript"></script>
+</body>
+</html>

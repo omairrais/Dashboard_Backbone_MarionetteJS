@@ -1,0 +1,44 @@
+<div class="row header">
+  		<div class="small-6 columns files">
+        	<h2>{{date | date:'yyyy-MM-dd'}} : التاريخ</h2>
+        </div>
+        <div class="small-6 columns"><h1>وزارة العدل: لوحة مؤشرات الرأي العام على تويتر</h1></div>
+</div>
+<ul id="File" class="menu_simple">
+    			<li ng-repeat="f in files" ng-if="f.id == 643 || f.id == 644 || f.id == 639">
+                    <a href="#/{{f.id}}">{{f.name}} <br/>
+                    	<p>{{f.description}}</p>
+                    </a>
+                </li>
+</ul>
+<div class="row section">
+    <div class="small-8 columns">
+		<div class="row"><div ng-repeat="k in file.keywords" id="{{k.id}}" class="small-4 columns kw"> <label for="cb_{{k.id}}">{{k.keyword}}</label></div></div>
+    </div>
+    <div class="small-4 columns">
+		<h4>{{file.name}}</h4>
+    	<p>{{file.description}}</p>
+    </div>
+</div>
+<div class="row">
+	<div ui-view="Summery"></div>
+</div>
+<div class="row senitmentcol">
+<div class="small-6 columns"> <div ui-view="Sentiments"></div> </div>
+<div class="small-6 columns"> <div ui-view="TopFollowers"></div> </div>
+</div>
+
+<div class="row hashtagcol">
+	<div class="small-6 columns"><div ui-view="TopHashtags"></div></div>
+    <div class="small-6 columns"><div ui-view="TopLinks"></div></div>
+</div>
+
+
+<div class="row heatmapcol">
+<div class="small-6 columns"> <div ui-view="DiscoveredSubjects"></div> </div>
+<div class="small-6 columns"> <div ui-view="HeatMap"></div> </div>
+</div>
+
+<div ui-view="TopTweets"></div>
+
+    <!--<div ui-view="TopTrending"></div>-->

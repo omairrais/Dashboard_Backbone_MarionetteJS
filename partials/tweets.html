@@ -1,0 +1,52 @@
+<h4>التغريدات</h4>
+
+<div class="timeline">
+<div ng-repeat="t in tweets">
+   <div class="post tweet">
+			<div class="post_stat ttbox" >
+				<ul>
+					<li class="smallicon info-filenameicon"> <em>اسم الملف</em> <span class="infocard_cropped_label">{{file.name}}</span></li>
+					<li class="smallicon info-retweeticon"> <em>إعادة النشر</em> <span>{{t.occurrence | number}}</span></li>
+					
+                    <li class="smallicon info-smilefaceicon" ng-if="t.tweet_sentiment == 1"> <em>قياس المشاعر</em> <span style="color:#0C0;">ايجابي</span></li>
+                    <li class="smallicon info-sadfaceicon" ng-if="t.tweet_sentiment == -1"> <em>قياس المشاعر</em> <span style="color:#f37b7b;">سلبي</span></li>
+                    <li class="smallicon info-pokerfaceicon" ng-if="t.tweet_sentiment == 0"> <em>قياس المشاعر</em> <span style="color:#A8A7A3;">محايد</span></li>
+                    <li class="smallicon info-pokerfaceicon" ng-if="t.tweet_sentiment == -2"> <em>قياس المشاعر</em> <span>غير معروف</span></li>
+                    <li class="smallicon info-gendericon" ng-if="t.tweet.user.gender != 'undefined'" style="display:none;"> <em>نوع</em> 
+                    		<span ng-if="t.tweet.user.gender != 'GENDER_UNKNOWN'">{{t.tweet.user.gender}}</span>
+                            <span ng-if="t.tweet.user.gender == 'GENDER_UNKNOWN'">Not Detected</span>
+                    </li>
+					<li class="smallicon info-timeicon"> <em>التاريخ</em> <span style="text-transform:lowercase;">{{parseDate(t.tweet.created_at) | date:'dd-dd-yyyy'}}</span></li>
+				</ul>
+			</div>
+	
+			<div style="" class="post_info">
+				<div style="" class="time">
+				<span>{{parseDate(t.tweet.created_at) | date:'dd-MM' }}</span>
+				<span>{{parseDate(t.tweet.created_at) | date:'yyyy' }}</span>
+				</div>
+				<div style="" class="userimg">
+					<img src="{{t.tweet.user.profile_image_url}}" class="profile_pic" onerror="this.src='images/tt_temp_image.jpg'" />
+				</div>
+				<div style="width:250px;" class="id">
+					<span class="name">{{t.tweet.user.name}}</span>
+					<span class="handler">@{{t.tweet.user.screen_name}}</span>
+					
+					<div class="tweet_user_info">
+						<span>{{t.tweet.user.followers_count | number}} المتابعين</span>
+                        <span ng-if="t.misbar_tweet_location != 'undefined' && t.misbar_tweet_location != '' && t.misbar_tweet_location != 'none' && t.misbar_tweet_location != 'Unknown'">الدولة 
+                        	<a>{{ misbar_tweet_location }}</a>
+                        </span>
+						<span ng-if="t.tweet.user.location != '' && t.tweet.user.location != 'undefined' && t.tweet.user.location != 'place'">الدولة 
+                        	<a>{{ t.tweet.user.location }}</a>
+                        </span>
+					</div>
+				</div>
+				
+			</div>
+			<div style="height:116px" class="post_text">
+				<div class="data" ng-bind-html="t.tweet.text | unsafe"> </div>
+			</div>
+		</div>
+</div>  
+</div>
